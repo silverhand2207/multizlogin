@@ -4,5 +4,16 @@
     "groupEventWebhookUrl": "",
     "reactionWebhookUrl": ""
   },
-  "accounts": {}
+  "accounts": {
+    "1583467914721027122": {
+      "messageWebhookUrl": "http://10.124.56.116/webhook/message",
+      "groupEventWebhookUrl": "http://10.124.56.116/webhook/groups",
+      "reactionWebhookUrl": "http://10.124.56.116/webhook/reaction"
+    },
+    "1509975170199462579": {
+      "messageWebhookUrl": "http://10.124.56.116/webhook/message",
+      "groupEventWebhookUrl": "http://10.124.56.116/webhook/groups",
+      "reactionWebhookUrl": "http://10.124.56.116/webhook/reactions"
+    }
+  }
 }
