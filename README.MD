@@ -2,8 +2,9 @@
 
 Hệ thống quản lý đa tài khoản Zalo, hỗ trợ đăng nhập và quản lý nhiều tài khoản Zalo cùng lúc, tích hợp proxy và webhook.
 ![flow.png](flow.png)
-## Tính năng
 
+## Tính năng
+- Đăng nhập tài khoản quản trị mặc định: admin/admin
 - Đăng nhập nhiều tài khoản Zalo thông qua mã QR
 - Hỗ trợ đăng nhập qua proxy
 - Quản lý danh sách proxy

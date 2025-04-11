@@ -2,8 +2,12 @@
 import http from 'http';
 import { WebSocketServer } from 'ws';
 import app from './app.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || 'localhost';
 
 // Tạo HTTP server
 const server = http.createServer(app);
@@ -18,7 +22,7 @@ export const webSocketClients = new Set();
 wss.on('connection', (ws) => {
   console.log('Có một kết nối WebSocket mới');
   webSocketClients.add(ws);
-  
+
   ws.on('close', () => {
     console.log('Kết nối WebSocket đã đóng');
     webSocketClients.delete(ws);
@@ -35,6 +39,6 @@ export function broadcastMessage(message) {
 }
 
 // Sử dụng HTTP server thay vì app để hỗ trợ WebSocket
-server.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`Server đang chạy tại http://${HOST}:${PORT}`);
 });
