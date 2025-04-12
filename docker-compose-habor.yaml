@@ -1,0 +1,37 @@
+version: "3.9"
+
+networks:
+  traefik:
+    external: true
+
+services:
+  zalo-server:
+    image: docker.weloyalty.net/weloyalty/partner-zalo-server:${IMAGE_TAG}
+    container_name: zalo-server
+    restart: always
+    networks:
+      - traefik
+    env_file: .env
+    volumes:
+      - ./zalo_data:/app/data
+    environment:
+      - PORT=3000
+      - MESSAGE_WEBHOOK_URL=${MESSAGE_WEBHOOK_URL}
+      - GROUP_EVENT_WEBHOOK_URL=${GROUP_EVENT_WEBHOOK_URL}
+      - REACTION_WEBHOOK_URL=${REACTION_WEBHOOK_URL}
+    working_dir: /app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      # Get the routes from http
+      - "traefik.http.routers.zalo-server.rule=Host(${ZALO_SERVER_HOSTS}) && PathPrefix(`/`)"
+      - "traefik.http.routers.zalo-server.entrypoints=web"
+      # Service
+      - "traefik.http.services.zalo-server.loadbalancer.server.port=3000"
+      # Get the routes from https
+      - "traefik.http.routers.zalo-server-secured.rule=Host(${ZALO_SERVER_HOSTS}) && PathPrefix(`/`)"
+      - "traefik.http.routers.zalo-server-secured.entrypoints=web-secure"
+      # Apply authentication with http challenge
+      - "traefik.http.routers.zalo-server-secured.tls=true"
+      - "traefik.http.routers.zalo-server-secured.tls.certresolver=myhttpchallenge"
+

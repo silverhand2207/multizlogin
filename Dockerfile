@@ -1,23 +1,33 @@
-FROM cangphamdocker/zalo-server:latest
+# WL-Dockerfile
+# Use Node.js LTS version as base image
+FROM node:20-slim
 
 # Set work directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if exists)
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Sao chép toàn bộ thư mục src vào thư mục gốc của container
-COPY src/ /app/
+# Copy the entire source code to the container
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+COPY .env* ./
 
-# Tạo các thư mục dữ liệu cần thiết
+# Create necessary data directories
 RUN mkdir -p /app/data/cookies
+RUN mkdir -p /app/zalo_data
 
-# Đảm bảo quyền và làm sạch bộ nhớ cache
+# Clean npm cache
 RUN npm cache clean --force
 
-# Mở cổng và định nghĩa điểm vào (entrypoint)
+# Set required permissions
+RUN chmod -R 755 /app
+
+# Expose the application port
 EXPOSE 3000
-CMD ["node", "server.js"]
+
+# Define the entry point
+CMD ["node", "src/server.js"]

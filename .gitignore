@@ -42,3 +42,6 @@ jspm_packages/
 
 cred*
 .qodo
+
+
+src/config/webhookConfig.json
